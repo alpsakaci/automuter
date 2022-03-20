@@ -11,7 +11,7 @@
 	<groupId>com.alpsakaci</groupId>
 	<artifactId>automuter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>automuter</name>
+	<name>Auto Muter</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>16</java.version>
@@ -64,6 +64,13 @@
 			<groupId>com.fasterxml.jackson.module</groupId>
 			<artifactId>jackson-module-kotlin</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+
 
 	</dependencies>
 
