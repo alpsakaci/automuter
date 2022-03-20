@@ -9,7 +9,7 @@ import org.apache.commons.io.IOUtils
 import org.springframework.http.HttpStatus
 import java.lang.Exception
 
-class FeignClientErrorDecoder: ErrorDecoder {
+class FeignClientErrorDecoder : ErrorDecoder {
 
     override fun decode(methodKey: String, response: Response): Exception {
         val errorMessage = if (response.body() != null) {

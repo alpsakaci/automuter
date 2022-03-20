@@ -1,8 +1,9 @@
 package com.alpsakaci.automuter.application.model.exception.feign
 
-class FeignAlreadyExistsException: FeignException {
+class FeignAlreadyExistsException : FeignException {
 
-    constructor(message: String): super(message)
+    constructor(message: String) : super(message)
 
-    constructor(messageCode: String, vararg messageArgs: Any): super(messageCode, messageArgs)
+    constructor(messageCode: String, vararg messageArgs: Any) : super(messageCode, messageArgs)
+
 }
