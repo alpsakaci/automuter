@@ -10,3 +10,35 @@ feign:
         url: https://api.github.com
         connectTimeout: 1000
         readTimeout: 1000
+      twitter-api:
+        name: twitter-api
+        url: https://api.twitter.com
+        connectTimeout: 1000
+        readTimeout: 1000
+
+twitter-api:
+  api-key: ${TWITTER_API_KEY}
+  client-secret: ${TWITTER_SECRET_KEY}
+  access-token: ${TWITTER_ACCESS_TOKEN}
+
+spring:
+  main:
+    allow-circular-references: true
+  security:
+    oauth2:
+      client:
+        registration:
+          twitter:
+            provider: twitter
+            authorization-grant-type: client_credentials
+            client-id: ${TWITTER_CLIENT_ID}
+            client-secret: ${TWITTER_CLIENT_SECRET}
+        provider:
+          twitter:
+            authorization-uri: https://api.twitter.com/oauth/authorize
+            token-uri: https://api.twitter.com/oauth2/token
+            user-info-uri: https://api.twitter.com/2/users/me
+            user-name-attribute: data:username
+
+
+
