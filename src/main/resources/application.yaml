@@ -33,12 +33,4 @@ spring:
             authorization-grant-type: client_credentials
             client-id: ${TWITTER_CLIENT_ID}
             client-secret: ${TWITTER_CLIENT_SECRET}
-        provider:
-          twitter:
-            authorization-uri: https://api.twitter.com/oauth/authorize
-            token-uri: https://api.twitter.com/oauth2/token
-            user-info-uri: https://api.twitter.com/2/users/me
-            user-name-attribute: data:username
-
-
-
+            redirect-uri: http://127.0.0.1:8080/login/oauth2/code/twitter

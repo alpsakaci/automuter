@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest
 
 
 class CustomAuthorizationRequestResolver(
-        clientRegistrationRepository: ClientRegistrationRepository,
-        authorizationRequestBaseUri: String
+    clientRegistrationRepository: ClientRegistrationRepository,
+    authorizationRequestBaseUri: String
 ) : OAuth2AuthorizationRequestResolver {
 
     private var defaultResolver: OAuth2AuthorizationRequestResolver
@@ -44,9 +44,9 @@ class CustomAuthorizationRequestResolver(
         addPkceParameters(attributes, additionalParameters)
 
         return OAuth2AuthorizationRequest.from(req)
-                .attributes(attributes)
-                .additionalParameters(additionalParameters)
-                .build()
+            .attributes(attributes)
+            .additionalParameters(additionalParameters)
+            .build()
     }
 
     private fun addPkceParameters(attributes: MutableMap<String, Any>, additionalParameters: MutableMap<String, Any>) {

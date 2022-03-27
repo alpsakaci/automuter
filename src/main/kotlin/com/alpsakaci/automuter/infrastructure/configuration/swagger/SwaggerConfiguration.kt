@@ -11,9 +11,9 @@ class SwaggerConfiguration {
     @Bean
     fun publicApi(): GroupedOpenApi {
         return GroupedOpenApi.builder()
-                .group("automuter")
-                .packagesToScan("com.alpsakaci.automuter.infrastructure.controller")
-                .build()
+            .group("automuter")
+            .packagesToScan("com.alpsakaci.automuter.infrastructure.controller")
+            .build()
     }
 
 }

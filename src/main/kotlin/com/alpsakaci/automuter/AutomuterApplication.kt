@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class AutomuterApplication
 
 fun main(args: Array<String>) {
-	runApplication<AutomuterApplication>(*args)
+    runApplication<AutomuterApplication>(*args)
 }
