@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/github")
 class GithubController(val gitHubApiClient: GitHubApiClient) {
 
-    @PostMapping("/fetchUserInfo")
+    @PostMapping("/get-user")
     fun fetchGithubUserInfo(@RequestBody githubGetUserRequest: GithubGetUserRequest): GithubUserResponse {
         val res = gitHubApiClient.getUser(githubGetUserRequest.username)
         return GithubUserResponse(res.avatar_url, res.html_url, res.name, res.location, res.bio)
     }
-
 }

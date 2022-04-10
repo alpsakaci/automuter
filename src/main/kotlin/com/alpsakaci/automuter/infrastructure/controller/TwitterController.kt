@@ -1,11 +1,15 @@
 package com.alpsakaci.automuter.infrastructure.controller
 
 import com.alpsakaci.automuter.infrastructure.httpclient.twitterapi.TwitterApiClient
+import com.alpsakaci.automuter.infrastructure.httpclient.twitterapi.request.MuteUserRequest
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/twitter")
 class TwitterController(val twitterApiClient: TwitterApiClient) {
+
+    val userFields = "description,profile_image_url"
+    val tweetFields = "attachments,lang,entities,referenced_tweets,text"
 
     // User Lookup
 
@@ -16,22 +20,22 @@ class TwitterController(val twitterApiClient: TwitterApiClient) {
 
     @GetMapping("/users-by-id/{userId}")
     fun getUserById(@PathVariable("userId") userId: String): Any {
-       return twitterApiClient.getUserById(userId)
+        return twitterApiClient.getUserById(userId, userFields, tweetFields)
     }
 
     @GetMapping("/users-by-ids/{ids}")
     fun getUsersById(@PathVariable("ids") ids: String): Any {
-        return twitterApiClient.getUsersById(ids)
+        return twitterApiClient.getUsersById(ids, userFields, tweetFields)
     }
 
     @GetMapping("/users-by-username/{username}")
     fun getUserByUsername(@PathVariable("username") username: String): Any {
-        return twitterApiClient.getUserByUsername(username)
+        return twitterApiClient.getUserByUsername(username, userFields, tweetFields)
     }
 
     @GetMapping("/users-by-usernames/{usernames}")
     fun getUserByUsernames(@PathVariable("usernames") usernames: String): Any {
-        return twitterApiClient.getUserByUsernames(usernames)
+        return twitterApiClient.getUserByUsernames(usernames, userFields, tweetFields)
     }
 
     // Mutes
@@ -53,6 +57,3 @@ class TwitterController(val twitterApiClient: TwitterApiClient) {
     }
 }
 
-data class MuteUserRequest(
-    val target_user_id: String
-)
