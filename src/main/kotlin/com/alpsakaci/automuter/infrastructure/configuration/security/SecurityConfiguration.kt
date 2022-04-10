@@ -52,7 +52,7 @@ class SecurityConfiguration(
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
             .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
             .redirectUri(redirectUri)
-            .scope("users.read", "tweet.read", "tweet.write", "like.read")
+            .scope("users.read", "tweet.read", "tweet.write", "like.read", "mute.read", "mute.write")
             .authorizationUri("https://twitter.com/i/oauth2/authorize")
             .tokenUri("https://api.twitter.com/2/oauth2/token")
             .userInfoUri("https://api.twitter.com/2/users/me")
