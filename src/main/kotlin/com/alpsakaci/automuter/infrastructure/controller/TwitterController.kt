@@ -15,7 +15,7 @@ class TwitterController(val twitterApiClient: TwitterApiClient) {
 
     @GetMapping("/users-me")
     fun me(): Any {
-        return twitterApiClient.me()
+        return twitterApiClient.me(userFields, tweetFields)
     }
 
     @GetMapping("/users-by-id/{userId}")
@@ -41,8 +41,11 @@ class TwitterController(val twitterApiClient: TwitterApiClient) {
     // Mutes
 
     @GetMapping("/mutes/lookup/{userId}")
-    fun mutesLookup(@PathVariable("userId") userId: String): Any {
-        return twitterApiClient.mutesLookup(userId)
+    fun mutesLookup(@PathVariable("userId") userId: String, @RequestParam("pagination_token", required = false) paginationToken: String?): Any {
+        if (paginationToken != null) {
+            return twitterApiClient.mutesLookupPaginated(userId, userFields, tweetFields, 100, paginationToken)
+        }
+        return twitterApiClient.mutesLookup(userId, userFields, tweetFields, 100)
     }
 
     @PostMapping("/mutes/mute/{sourceUserId}/{targetUserId}")
