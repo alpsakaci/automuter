@@ -1,6 +1,6 @@
-package com.alpsakaci.automuter.infrastructure.httpclient.twitterapi.resonse
+package com.alpsakaci.automuter.application.model
 
-data class UserResponse(
+data class TwitterUser(
     val username: String,
     val id: String,
     val profile_image_url: String,

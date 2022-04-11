@@ -1,5 +1,7 @@
 package com.alpsakaci.automuter.infrastructure.httpclient.twitterapi
 
+import com.alpsakaci.automuter.application.model.TwitterMetaData
+import com.alpsakaci.automuter.application.model.TwitterUser
 import com.alpsakaci.automuter.infrastructure.configuration.feign.interceptor.TwitterApiRequestInterceptor
 import com.alpsakaci.automuter.infrastructure.httpclient.twitterapi.request.MuteUserRequest
 import com.alpsakaci.automuter.infrastructure.httpclient.twitterapi.resonse.*
@@ -19,35 +21,35 @@ interface TwitterApiClient {
     fun me(
         @RequestParam("user.fields") userFields: String,
         @RequestParam("tweet.fields") tweetFields: String
-    ): BaseResponse<UserResponse, MetaDataResponse?>
+    ): BaseResponse<TwitterUser, TwitterMetaData?>
 
     @GetMapping("/2/users/{id}")
     fun getUserById(
         @PathVariable("id") id: String,
         @RequestParam("user.fields") userFields: String,
         @RequestParam("tweet.fields") tweetFields: String
-    ): BaseResponse<UserResponse, MetaDataResponse?>
+    ): BaseResponse<TwitterUser, TwitterMetaData?>
 
     @GetMapping("/2/users?ids={ids}")
     fun getUsersById(
         @PathVariable("ids") ids: String,
         @RequestParam("user.fields") userFields: String,
         @RequestParam("tweet.fields") tweetFields: String
-    ): BaseResponse<ArrayList<UserResponse>, MetaDataResponse?>
+    ): BaseResponse<ArrayList<TwitterUser>, TwitterMetaData?>
 
     @GetMapping("/2/users/by/username/{username}")
     fun getUserByUsername(
         @PathVariable("username") username: String,
         @RequestParam("user.fields") userFields: String,
         @RequestParam("tweet.fields") tweetFields: String
-    ): BaseResponse<UserResponse, MetaDataResponse?>
+    ): BaseResponse<TwitterUser, TwitterMetaData?>
 
     @GetMapping("/2/users/by?usernames={usernames}")
     fun getUserByUsernames(
         @PathVariable("usernames") usernames: String,
         @RequestParam("user.fields") userFields: String,
         @RequestParam("tweet.fields") tweetFields: String
-    ): BaseResponse<ArrayList<UserResponse>, MetaDataResponse?>
+    ): BaseResponse<ArrayList<TwitterUser>, TwitterMetaData?>
 
     // Mutes
 
@@ -57,7 +59,7 @@ interface TwitterApiClient {
         @RequestParam("user.fields") userFields: String,
         @RequestParam("tweet.fields") tweetFields: String,
         @RequestParam("max_results") maxResults: Int,
-    ): BaseResponse<ArrayList<UserResponse>, MetaDataResponse?>
+    ): BaseResponse<ArrayList<TwitterUser>, TwitterMetaData?>
 
     @GetMapping("/2/users/{userId}/muting")
     fun mutesLookupPaginated(
@@ -66,7 +68,7 @@ interface TwitterApiClient {
         @RequestParam("tweet.fields") tweetFields: String,
         @RequestParam("max_results") maxResults: Int,
         @RequestParam("pagination_token") paginationToken: String
-    ): BaseResponse<ArrayList<UserResponse>, MetaDataResponse?>
+    ): BaseResponse<ArrayList<TwitterUser>, TwitterMetaData?>
 
     @PostMapping("/2/users/{sourceUserId}/muting")
     fun muteUserById(
@@ -81,13 +83,14 @@ interface TwitterApiClient {
     ): BaseResponse<MuteUserResponse, Any>
 
     // Follows
+
     @GetMapping("/2/users/{id}/followers")
     fun getFollowers(
         @PathVariable("id") id: String,
         @RequestParam("user.fields") userFields: String,
         @RequestParam("tweet.fields") tweetFields: String,
         @RequestParam("max_results") maxResults: Int,
-    ): BaseResponse<ArrayList<UserResponse>, MetaDataResponse?>
+    ): BaseResponse<ArrayList<TwitterUser>, TwitterMetaData?>
 
     @GetMapping("/2/users/{id}/followers")
     fun getFollowersPaginated(
@@ -96,16 +99,15 @@ interface TwitterApiClient {
         @RequestParam("tweet.fields") tweetFields: String,
         @RequestParam("max_results") maxResults: Int,
         @RequestParam("pagination_token") paginationToken: String
-    ): BaseResponse<ArrayList<UserResponse>, MetaDataResponse?>
+    ): BaseResponse<ArrayList<TwitterUser>, TwitterMetaData?>
 
-    // Follows
     @GetMapping("/2/users/{id}/following")
     fun getFollowing(
         @PathVariable("id") id: String,
         @RequestParam("user.fields") userFields: String,
         @RequestParam("tweet.fields") tweetFields: String,
         @RequestParam("max_results") maxResults: Int,
-    ): BaseResponse<ArrayList<UserResponse>, MetaDataResponse?>
+    ): BaseResponse<ArrayList<TwitterUser>, TwitterMetaData?>
 
     @GetMapping("/2/users/{id}/following")
     fun getFollowingPaginated(
@@ -114,5 +116,5 @@ interface TwitterApiClient {
         @RequestParam("tweet.fields") tweetFields: String,
         @RequestParam("max_results") maxResults: Int,
         @RequestParam("pagination_token") paginationToken: String
-    ): BaseResponse<ArrayList<UserResponse>, MetaDataResponse?>
+    ): BaseResponse<ArrayList<TwitterUser>, TwitterMetaData?>
 }

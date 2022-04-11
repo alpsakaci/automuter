@@ -13,8 +13,8 @@ feign:
       twitter-api:
         name: twitter-api
         url: https://api.twitter.com
-        connectTimeout: 1000
-        readTimeout: 1000
+        connectTimeout: 5000
+        readTimeout: 5000
 
 twitter-api:
   api-key: ${TWITTER_API_KEY}
