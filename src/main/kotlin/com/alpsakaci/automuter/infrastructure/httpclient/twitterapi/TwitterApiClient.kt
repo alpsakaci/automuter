@@ -2,6 +2,8 @@ package com.alpsakaci.automuter.infrastructure.httpclient.twitterapi
 
 import com.alpsakaci.automuter.infrastructure.configuration.feign.interceptor.TwitterApiRequestInterceptor
 import com.alpsakaci.automuter.infrastructure.httpclient.twitterapi.request.MuteUserRequest
+import com.alpsakaci.automuter.infrastructure.httpclient.twitterapi.resonse.FollowersResponse
+import com.alpsakaci.automuter.infrastructure.httpclient.twitterapi.resonse.FollowingResponse
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.*
 
@@ -18,27 +20,31 @@ interface TwitterApiClient {
     fun me(): Any
 
     @GetMapping("/2/users/{id}")
-    fun getUserById(@PathVariable("id") id: String,
-                    @RequestParam("user.fields") userFields: String,
-                    @RequestParam("tweet.fields") tweetFields: String
+    fun getUserById(
+        @PathVariable("id") id: String,
+        @RequestParam("user.fields") userFields: String,
+        @RequestParam("tweet.fields") tweetFields: String
     ): Any
 
     @GetMapping("/2/users?ids={ids}")
-    fun getUsersById(@PathVariable("ids") ids: String,
-                     @RequestParam("user.fields") userFields: String,
-                     @RequestParam("tweet.fields") tweetFields: String
+    fun getUsersById(
+        @PathVariable("ids") ids: String,
+        @RequestParam("user.fields") userFields: String,
+        @RequestParam("tweet.fields") tweetFields: String
     ): Any
 
     @GetMapping("/2/users/by/username/{username}")
-    fun getUserByUsername(@PathVariable("username") username: String,
-                          @RequestParam("user.fields") userFields: String,
-                          @RequestParam("tweet.fields") tweetFields: String
+    fun getUserByUsername(
+        @PathVariable("username") username: String,
+        @RequestParam("user.fields") userFields: String,
+        @RequestParam("tweet.fields") tweetFields: String
     ): Any
 
     @GetMapping("/2/users/by?usernames={usernames}")
-    fun getUserByUsernames(@PathVariable("usernames") usernames: String,
-                           @RequestParam("user.fields") userFields: String,
-                           @RequestParam("tweet.fields") tweetFields: String
+    fun getUserByUsernames(
+        @PathVariable("usernames") usernames: String,
+        @RequestParam("user.fields") userFields: String,
+        @RequestParam("tweet.fields") tweetFields: String
     ): Any
 
     // Mutes
@@ -52,4 +58,39 @@ interface TwitterApiClient {
     @DeleteMapping("/2/users/{source_user_id}/muting/{target_user_id}")
     fun unmuteUserById(@PathVariable("source_user_id") source_user_id: String, @PathVariable("target_user_id") target_user_id: String): Any
 
+    // Follows
+    @GetMapping("/2/users/{id}/followers")
+    fun getFollowers(
+        @PathVariable("id") id: String,
+        @RequestParam("user.fields") userFields: String,
+        @RequestParam("tweet.fields") tweetFields: String,
+        @RequestParam("max_results") maxResults: Int,
+    ): FollowersResponse
+
+    @GetMapping("/2/users/{id}/followers")
+    fun getFollowersPaginated(
+        @PathVariable("id") id: String,
+        @RequestParam("user.fields") userFields: String,
+        @RequestParam("tweet.fields") tweetFields: String,
+        @RequestParam("max_results") maxResults: Int,
+        @RequestParam("pagination_token") paginationToken: String
+    ): FollowersResponse
+
+    // Follows
+    @GetMapping("/2/users/{id}/following")
+    fun getFollowing(
+        @PathVariable("id") id: String,
+        @RequestParam("user.fields") userFields: String,
+        @RequestParam("tweet.fields") tweetFields: String,
+        @RequestParam("max_results") maxResults: Int,
+    ): FollowingResponse
+
+    @GetMapping("/2/users/{id}/following")
+    fun getFollowingPaginated(
+        @PathVariable("id") id: String,
+        @RequestParam("user.fields") userFields: String,
+        @RequestParam("tweet.fields") tweetFields: String,
+        @RequestParam("max_results") maxResults: Int,
+        @RequestParam("pagination_token") paginationToken: String
+    ): FollowingResponse
 }

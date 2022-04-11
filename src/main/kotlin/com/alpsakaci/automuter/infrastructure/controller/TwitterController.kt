@@ -55,5 +55,24 @@ class TwitterController(val twitterApiClient: TwitterApiClient) {
     fun unmuteUserById(@PathVariable("sourceUserId") sourceUserId: String, @PathVariable("targetUserId") targetUserId: String): Any {
         return twitterApiClient.unmuteUserById(sourceUserId, targetUserId)
     }
+
+    // Follows
+
+    @GetMapping("/2/users/{userId}/followers")
+    fun getFollowers(@PathVariable("userId") userId: String, @RequestParam("pagination_token", required = false) paginationToken: String?): Any {
+        if (paginationToken != null) {
+            return twitterApiClient.getFollowersPaginated(userId, userFields, tweetFields, 100, paginationToken)
+        }
+        return twitterApiClient.getFollowers(userId, userFields, tweetFields, 100)
+    }
+
+    @GetMapping("/2/users/{userId}/following")
+    fun getFollowing(@PathVariable("userId") userId: String, @RequestParam("pagination_token", required = false) paginationToken: String?): Any {
+        if (paginationToken != null) {
+            return twitterApiClient.getFollowingPaginated(userId, userFields, tweetFields, 100, paginationToken)
+        }
+        return twitterApiClient.getFollowing(userId, userFields, tweetFields, 100)
+    }
+
 }
 
