@@ -33,9 +33,11 @@ class MuteAllFollowersByUsernameCommandHandler(
         var counter = 0
         followers?.forEach { it ->
             val muteUserRequest = MuteUserRequest(it.id)
-            val muteResponse = twitterApiClient.muteUserById(authUser!!, muteUserRequest)
-            muteResponse.data?.muting.let { m ->
-                if (m == true) counter ++
+            if (it.id != authUser) {
+                val muteResponse = twitterApiClient.muteUserById(authUser!!, muteUserRequest)
+                muteResponse.data?.muting.let { m ->
+                    if (m == true) counter++
+                }
             }
         }
 
