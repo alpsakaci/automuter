@@ -3,6 +3,7 @@ package com.alpsakaci.automuter.infrastructure.httpclient.twitterapi
 import com.alpsakaci.automuter.application.model.TwitterMetaData
 import com.alpsakaci.automuter.application.model.TwitterUser
 import com.alpsakaci.automuter.infrastructure.configuration.feign.interceptor.TwitterApiRequestInterceptor
+import com.alpsakaci.automuter.infrastructure.httpclient.twitterapi.request.CreateTweetRequest
 import com.alpsakaci.automuter.infrastructure.httpclient.twitterapi.request.MuteUserRequest
 import com.alpsakaci.automuter.infrastructure.httpclient.twitterapi.resonse.*
 import org.springframework.cloud.openfeign.FeignClient
@@ -117,4 +118,10 @@ interface TwitterApiClient {
         @RequestParam("max_results") maxResults: Int,
         @RequestParam("pagination_token") paginationToken: String
     ): BaseResponse<ArrayList<TwitterUser>, TwitterMetaData?>
+
+
+    // Manage Tweets
+
+    @PostMapping("/2/tweets")
+    fun createTweet(@RequestBody createTweetRequest: CreateTweetRequest): BaseResponse<CreateTweetResponse, TwitterMetaData?>
 }
