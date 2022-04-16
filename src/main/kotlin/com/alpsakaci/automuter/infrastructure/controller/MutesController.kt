@@ -4,6 +4,9 @@ import com.alpsakaci.automuter.application.command.*
 import com.alpsakaci.automuter.application.query.MutesLookupQuery
 import com.alpsakaci.automuter.infrastructure.httpclient.twitterapi.TwitterApiClient
 import com.trendyol.kediatr.CommandBus
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -18,37 +21,43 @@ class MutesController(
 
     @GetMapping("/lookup")
     fun mutesLookup(@RequestParam("pagination_token", required = false) paginationToken: String?): Any {
-        val command = MutesLookupQuery(paginationToken)
+        val userId = twitterApiClient.me(userFields, tweetFields).data!!.id
+        paginationToken?.let {
+            return twitterApiClient.mutesLookupPaginated(userId, userFields, tweetFields, 1000, paginationToken)
+        }
+
+        return twitterApiClient.mutesLookup(userId, userFields, tweetFields, 1000)
+    }
+
+    @GetMapping("/get-all-muted-accounts")
+    fun getAllMutedAccounts(): Any {
+        val command = MutesLookupQuery(1000)
         return commandBus.executeQuery(command)
     }
 
-    @PostMapping("/mute/{targetUserId}")
-    fun muteUserById(@PathVariable("targetUserId") targetUserId: String) {
-        val command = MuteUserCommand(targetUserId)
+    @PostMapping("/mute")
+    fun muteUserById(@RequestBody command: MuteUserCommand) {
         commandBus.executeCommand(command)
     }
 
-    @PostMapping("/mute-by-username/{targetUsername}")
-    fun muteUserByUsername(@PathVariable("targetUsername") targetUsername: String) {
-        val command = MuteUserByUsernameCommand(targetUsername)
+    @PostMapping("/mute-by-username")
+    fun muteUserByUsername(@RequestBody command: MuteUserByUsernameCommand) {
         commandBus.executeCommand(command)
     }
 
-    @PostMapping("/mute-all-followers/{targetUsername}")
-    fun muteAllFollowers(@PathVariable("targetUsername") targetUsername: String) {
-        val command = MuteAllFollowersByUsernameCommand(targetUsername)
+    @PostMapping("/mute-all-followers")
+    fun muteAllFollowers(@RequestBody command: MuteAllFollowersByUsernameCommand){
+        runBlocking { commandBus.executeCommandAsync(command) }
+
+    }
+
+    @DeleteMapping("/unmute")
+    fun unmuteUserById(@RequestBody command: UnMuteUserCommand) {
         commandBus.executeCommand(command)
     }
 
-    @DeleteMapping("/unmute/{targetUserId}")
-    fun unmuteUserById(@PathVariable("targetUserId") targetUserId: String) {
-        val command = UnMuteUserCommand(targetUserId)
-        commandBus.executeCommand(command)
-    }
-
-    @DeleteMapping("/unmute-by-username/{targetUsername}")
-    fun unmuteUserByUsername(@PathVariable("targetUsername") targetUsername: String) {
-        val command = UnMuteUserByUsernameCommand(targetUsername)
+    @DeleteMapping("/unmute-by-username")
+    fun unmuteUserByUsername(@RequestBody command: UnMuteUserByUsernameCommand) {
         commandBus.executeCommand(command)
     }
 }
