@@ -4,8 +4,6 @@ import com.alpsakaci.automuter.application.command.*
 import com.alpsakaci.automuter.application.query.MutesLookupQuery
 import com.alpsakaci.automuter.infrastructure.httpclient.twitterapi.TwitterApiClient
 import com.trendyol.kediatr.CommandBus
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.springframework.web.bind.annotation.*
 
@@ -48,7 +46,6 @@ class MutesController(
     @PostMapping("/mute-all-followers")
     fun muteAllFollowers(@RequestBody command: MuteAllFollowersByUsernameCommand){
         runBlocking { commandBus.executeCommandAsync(command) }
-
     }
 
     @DeleteMapping("/unmute")
