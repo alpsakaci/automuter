@@ -45,6 +45,7 @@ class MutesController(
 
     @PostMapping("/mute-all-followers")
     fun muteAllFollowers(@RequestBody command: MuteAllFollowersByUsernameCommand){
+        // TODO: delegate security context to async task and convert the endpoint suspend fun
         runBlocking { commandBus.executeCommandAsync(command) }
     }
 

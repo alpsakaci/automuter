@@ -54,7 +54,7 @@ class MuteAllFollowersByUsernameCommandHandler(
         }
 
         if (counter != 0 && command.tweetAfterProcess) {
-            val createTweetRequest = CreateTweetRequest("I have muted $counter accounts with @automuter app. \uD83E\uDD2A \uD83D\uDD07")
+            val createTweetRequest = CreateTweetRequest("I have muted $counter accounts with @automuter app. Total muted accounts: ${alreadyMuted.size + counter} \uD83E\uDD2A \uD83D\uDD07")
             twitterApiClient.createTweet(createTweetRequest)
         }
         println("MuteAllFollowersCommand -> Counter: $counter, Tweet process: ${command.tweetAfterProcess}")

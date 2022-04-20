@@ -22,8 +22,7 @@ class TwitterApiRequestInterceptor(
         if (clientRegistrationId.equals("twitter")) {
             val client = clientService.loadAuthorizedClient<OAuth2AuthorizedClient>(clientRegistrationId, oauthToken.name)
             accessToken = client.accessToken.tokenValue
+            requestTemplate.header("Authorization", "Bearer $accessToken")
         }
-
-        requestTemplate.header("Authorization", "Bearer $accessToken")
     }
 }
